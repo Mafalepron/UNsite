@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UNevent — Событие как искусство</title>
+  <meta name="description" content="Профессиональная организация мероприятий полного цикла. От концертных программ до бизнес-событий. Превращаем идеи в искусство.">
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://user-gen-media-assets.s3.amazonaws.com">
+  
+  <!-- Critical fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Satoshi:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="/src/css/base.css">
+  <link rel="stylesheet" href="/src/css/components.css">
+  <link rel="stylesheet" href="/src/css/utilities.css">
+  <link rel="stylesheet" href="/src/css/responsive.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="UNevent — Событие как искусство">
+  <meta property="og:description" content="Профессиональная организация мероприятий полного цикла. От концертных программ до бизнес-событий.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unevent.ru">
+  <meta property="og:image" content="https://unevent.ru/og-image.jpg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UNevent — Событие как искусство">
+  <meta name="twitter:description" content="Профессиональная организация мероприятий полного цикла.">
+  <meta name="twitter:image" content="https://unevent.ru/og-image.jpg">
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="header"></div>
+  
+  <main>
+    <!-- Hero Section -->
+    <div id="hero"></div>
+    
+    <!-- Services Section -->
+    <div id="services"></div>
+    
+    <!-- Team Section -->
+    <div id="team"></div>
+    
+    <!-- Contacts Section -->
+    <div id="contacts"></div>
+  </main>
+  
+  <!-- Footer -->
+  <div id="footer"></div>
+  
+  <!-- Scripts -->
+  <script type="module" src="/src/js/main.js"></script>
+  
+  <!-- Component Loader -->
+  <script type="module">
+    // Load components dynamically
+    async function loadComponent(containerId, componentPath) {
+      try {
+        const response = await fetch(componentPath);
+        const html = await response.text();
+        document.getElementById(containerId).innerHTML = html;
+      } catch (error) {
+        console.error(`Failed to load component ${componentPath}:`, error);
+      }
+    }
+    
+    // Load all components
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Promise.all([
+        loadComponent('header', '/src/components/header.html'),
+        loadComponent('hero', '/src/components/hero.html'),
+        loadComponent('services', '/src/components/services.html'),
+        loadComponent('team', '/src/components/team.html'),
+        loadComponent('contacts', '/src/components/contacts.html'),
+        loadComponent('footer', '/src/components/footer.html')
+      ]);
+    });
+  </script>
+</body>
+</html>

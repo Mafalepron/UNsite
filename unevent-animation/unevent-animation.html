@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNevent Animation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy:wght@400&display=swap" rel="stylesheet">
+    <style>
+        .unevent-text-container {
+            display: inline-block;
+        }
+
+        .unevent-text-svg {
+            width: 500px;
+            height: 240px;
+        }
+
+        .unevent-letter {
+            font-family: 'Satisfy', cursive;
+            font-size: 144px;
+            fill: #e44082;
+            stroke: #e44082;
+            stroke-width: 3;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+            filter: drop-shadow(0 0 0.8px #000000);
+        }
+
+        .unevent-letter.animate {
+            opacity: 1;
+            animation: drawLetter 1.2s ease-in-out forwards;
+        }
+
+        @keyframes drawLetter {
+            0% {
+                stroke-dashoffset: 300;
+                fill-opacity: 0;
+                opacity: 0.3;
+            }
+            30% {
+                stroke-dashoffset: 200;
+                fill-opacity: 0.2;
+                opacity: 0.6;
+            }
+            70% {
+                stroke-dashoffset: 100;
+                fill-opacity: 0.6;
+                opacity: 0.8;
+            }
+            100% {
+                stroke-dashoffset: 0;
+                fill-opacity: 1;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .unevent-text-svg {
+                width: 300px;
+                height: 144px;
+            }
+            
+            .unevent-letter {
+                font-size: 86px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .unevent-text-svg {
+                width: 250px;
+                height: 120px;
+            }
+            
+            .unevent-letter {
+                font-size: 72px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- UNevent Text Animation -->
+    <div class="unevent-text-container">
+        <svg class="unevent-text-svg" viewBox="0 0 500 240" preserveAspectRatio="xMidYMid meet">
+            <text class="unevent-letter" id="letterU" x="50" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">U</text>
+            <text class="unevent-letter" id="letterN" x="120" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">N</text>
+            <text class="unevent-letter" id="letterE1" x="190" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">e</text>
+            <text class="unevent-letter" id="letterV" x="250" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">v</text>
+            <text class="unevent-letter" id="letterE2" x="310" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">e</text>
+            <text class="unevent-letter" id="letterN2" x="370" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">n</text>
+            <text class="unevent-letter" id="letterT" x="420" y="150" font-family="Satisfy, cursive" font-size="144" fill="#e44082" stroke="#e44082" stroke-width="2" opacity="0">t</text>
+        </svg>
+    </div>
+
+    <script>
+        function animateUneventText() {
+            const letters = ['letterU', 'letterN', 'letterE1', 'letterV', 'letterE2', 'letterN2', 'letterT'];
+            let currentLetter = 0;
+            
+            const animateNextLetter = () => {
+                if (currentLetter < letters.length) {
+                    const letterElement = document.getElementById(letters[currentLetter]);
+                    if (letterElement) {
+                        letterElement.classList.add('animate');
+                        currentLetter++;
+                        setTimeout(animateNextLetter, 600);
+                    }
+                }
+            };
+            
+            animateNextLetter();
+        }
+
+        // Автоматический запуск
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(animateUneventText, 1000);
+        });
+    </script>
+</body>
+</html>
