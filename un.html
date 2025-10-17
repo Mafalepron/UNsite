@@ -25,6 +25,7 @@
   --bg-card:#1e1b4b;--text-light:#f1f5f9;--text-muted:#94a3b8;--border:#4338ca;
   --shadow-neon:0 0 50px rgba(255, 255, 255, 0.3);--shadow-purple:0 20px 50px rgba(139,92,246,.4);
   --shadow-glow:0 0 30px rgba(255,255,255,.5);--radius:24px;--radius-sm:16px;
+  --handwriting-color:#28c5dd;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -64,7 +65,7 @@ body{
   color:rgba(255, 255, 255, 0.7);text-decoration:none;padding:12px 20px;border-radius:var(--radius-sm);
   transition:all .4s ease;font-weight:400;position:relative;overflow:hidden;
   font-family:'Kalam', 'Caveat', cursive;
-  font-size:26px;
+  font-size:28px;
   text-transform:lowercase;
   letter-spacing:0.5px;
   text-shadow:0 0 10px rgba(255, 255, 255, 0.1);
@@ -165,6 +166,7 @@ body{
 .hero__content{position:relative;z-index:50;max-width:100%;padding:0 20px;width:100%}
 .hero__logo{
   margin-bottom:30px;
+  margin-left:-40px;
   text-align:center;
 }
 .logo__container{
@@ -290,7 +292,7 @@ body{
 .hero__title{
   font-family:'Satoshi',sans-serif;font-weight:800;
   font-size:clamp(48px,8vw,88px);line-height:1.1;margin:0 0 32px;
-  color:var(--text-light);
+  color:#f1cbd7;
   animation:textglow 3s ease-in-out infinite alternate;
   text-shadow:0 0 40px rgba(1, 146, 209, 0.842);
   position:relative;
@@ -303,18 +305,20 @@ body{
   display:inline-block;
   margin:0 0 32px 40px;
   z-index:30;
+  color:var(--handwriting-color);
 }
 .handwriting-svg{
   width:100%;
   height:clamp(100px,20vw,200px);
   max-width:100%;
+  transform:translateX(40px);
 }
 .handwriting-letter{
   font-family:'KobzarKS',cursive;
   font-size:80px;
-  fill:#ec4899;
-  stroke:#ec4899;
-  stroke-width:2;
+  fill:var(--handwriting-color);
+  stroke:var(--handwriting-color);
+  stroke-width:0.1px;
   stroke-dasharray:300;
   stroke-dashoffset:300;
   opacity:0;
@@ -681,7 +685,7 @@ body{
 .hero__subtitle{
   font-family:'Kalam', 'Caveat', 'Comic Sans MS', cursive;
   font-size:clamp(20px, 3.5vw, 30px);
-  background:linear-gradient(45deg, #ff6b9d, #4ecdc4, #45b7d1, #f9ca24);
+  background:linear-gradient(45deg, #ff6b9d, #4ecdc4, #45b7d1, #afffaf);
   background-size: 300% 300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -724,10 +728,10 @@ body{
 }
 
 /* Карточки услуг */
-.services{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:32px}
+.services{display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:32px}
 .card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:40px;transition:.4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;
+  padding:60px;transition:.4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;
 }
 .card::before{
   content:'';position:absolute;inset:0;
@@ -746,7 +750,7 @@ body{
 }
 .card__icon{font-size:48px;margin-bottom:20px;display:block;filter:drop-shadow(0 0 10px rgba(255,255,255,.5))}
 .card__image{
-  width:100%;height:200px;border-radius:var(--radius-sm);margin:16px 0;
+  width:100%;height:300px;border-radius:var(--radius-sm);margin:24px 0;
   object-fit:cover;transition:.3s;
 }
 .card:hover .card__image{transform:scale(1.05)}
@@ -813,6 +817,7 @@ input:focus,select:focus,textarea:focus{
   width:100%;background:linear-gradient(135deg, var(--neon-yellow), var(--electric-blue));
   color:var(--bg-dark);border:none;padding:16px;border-radius:var(--radius-sm);
   font-weight:600;font-size:16px;cursor:pointer;transition:.3s;
+  margin-top:24px;
 }
 .form__submit:hover{transform:translateY(-2px);box-shadow:var(--shadow-neon)}
 .form__policy{color:var(--text-muted);font-size:14px;margin-top:16px}
@@ -890,27 +895,27 @@ input:focus,select:focus,textarea:focus{
         </div>
         <div class="hero__title handwriting-text">
           <svg class="handwriting-svg" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid meet">
-            <text class="handwriting-letter" id="letterS" x="50" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">С</text>
-            <text class="handwriting-letter" id="letterO" x="85" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">о</text>
-            <text class="handwriting-letter" id="letterB" x="120" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">б</text>
-            <text class="handwriting-letter" id="letterY" x="151" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">ы</text>
-            <text class="handwriting-letter" id="letterT" x="196" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">т</text>
-            <text class="handwriting-letter" id="letterI" x="267" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">и</text>
-            <text class="handwriting-letter" id="letterE" x="320" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">е</text>
-            <text class="handwriting-letter" id="letterSpace1" x="400" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0"> </text>
-            <text class="handwriting-letter" id="letterK" x="450" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">к</text>
-            <text class="handwriting-letter" id="letterA" x="500" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">а</text>
-            <text class="handwriting-letter" id="letterK2" x="548" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">к</text>
-            <text class="handwriting-letter" id="letterSpace2" x="600" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0"> </text>
-            <text class="handwriting-letter" id="letterI2" x="650" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">и</text>
-            <text class="handwriting-letter" id="letterS2" x="700" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">с</text>
-            <text class="handwriting-letter" id="letterK3" x="732" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">к</text>
-            <text class="handwriting-letter" id="letterU" x="787" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">у</text>
-            <text class="handwriting-letter" id="letterS3" x="825" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">с</text>
-            <text class="handwriting-letter" id="letterS4" x="855" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">с</text>
-            <text class="handwriting-letter" id="letterT2" x="885" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">т</text>
-            <text class="handwriting-letter" id="letterV" x="955" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">в</text>
-            <text class="handwriting-letter" id="letterO2" x="995" y="120" font-family="KobzarKS, cursive" font-size="80" fill="#ec4899" stroke="#ec4899" stroke-width="2" opacity="0">о</text>
+            <text class="handwriting-letter" id="letterS" x="50" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">С</text>
+            <text class="handwriting-letter" id="letterO" x="85" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">о</text>
+            <text class="handwriting-letter" id="letterB" x="120" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">б</text>
+            <text class="handwriting-letter" id="letterY" x="151" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">ы</text>
+            <text class="handwriting-letter" id="letterT" x="196" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">т</text>
+            <text class="handwriting-letter" id="letterI" x="267" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">и</text>
+            <text class="handwriting-letter" id="letterE" x="320" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">е</text>
+            <text class="handwriting-letter" id="letterSpace1" x="400" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0"> </text>
+            <text class="handwriting-letter" id="letterK" x="410" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">к</text>
+            <text class="handwriting-letter" id="letterA" x="460" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">а</text>
+            <text class="handwriting-letter" id="letterK2" x="508" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">к</text>
+            <text class="handwriting-letter" id="letterSpace2" x="560" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0"> </text>
+            <text class="handwriting-letter" id="letterI2" x="610" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">и</text>
+            <text class="handwriting-letter" id="letterS2" x="660" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">с</text>
+            <text class="handwriting-letter" id="letterK3" x="692" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">к</text>
+            <text class="handwriting-letter" id="letterU" x="747" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">у</text>
+            <text class="handwriting-letter" id="letterS3" x="785" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">с</text>
+            <text class="handwriting-letter" id="letterS4" x="815" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">с</text>
+            <text class="handwriting-letter" id="letterT2" x="845" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">т</text>
+            <text class="handwriting-letter" id="letterV" x="915" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">в</text>
+            <text class="handwriting-letter" id="letterO2" x="955" y="120" font-family="KobzarKS, cursive" font-size="80" fill="currentColor" stroke="currentColor" stroke-width="2" opacity="0">о</text>
           </svg>
         </div>
         <p class="hero__subtitle">
@@ -935,7 +940,7 @@ input:focus,select:focus,textarea:focus{
         <div class="services">
           <article class="card" data-animate>
             <h3 class="h4">Событие как искусство</h3>
-            <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/74b4f8a5-5b2a-4b28-85d0-4c9c59fff018.png" alt="Театрализованное представление" class="card__image">
+            <img src="images/sob_kak_isk.png" alt="Событие как искусство" class="card__image">
             <p>Концертно-развлекательные программы, театрализованные вечеринки, личные и семейные праздники.</p>
           </article>
 
@@ -953,7 +958,7 @@ input:focus,select:focus,textarea:focus{
 
           <article class="card" data-animate>
             <h3 class="h4">Бизнес-события</h3>
-            <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/14b95e34-6ca9-4252-a290-f85823fa2f3a.png" alt="Бизнес-конференция" class="card__image">
+            <img src="images/Busines.jpg" alt="Бизнес-события" class="card__image">
             <p>Презентации, семинары, бизнес-игры, выставки. Рассеиваем мифы о протокольности, создаем креативное пространство.</p>
           </article>
 
@@ -1183,19 +1188,19 @@ function animateBallJourney() {
   // Активация буквы U (18% анимации) - при первом ударе
   setTimeout(() => {
     letterU.classList.add('ball-active');
-  }, 1800);
+  }, 1260);
   
   // Деактивация U и активация N (30% анимации) - при ударе о N
   setTimeout(() => {
     letterU.classList.remove('ball-active');
     letterN.classList.add('ball-active');
-  }, 3000);
+  }, 2100);
   
   // Деактивация N и активация event (42% анимации) - при ударе о event
   setTimeout(() => {
     letterN.classList.remove('ball-active');
     wordEvent.classList.add('ball-active');
-  }, 4200);
+  }, 2940);
   
   // Слово event остается активным до начала следующей анимации
   
@@ -1204,7 +1209,7 @@ function animateBallJourney() {
     letterU.classList.add('spread-left');
     letterN.classList.add('spread-left');
     wordEvent.classList.add('spread-right');
-  }, 4500);
+  }, 3150);
 }
 
 // Автоматический запуск анимации при загрузке страницы
@@ -1227,7 +1232,7 @@ function startBallAnimation() {
   
   // Запуск анимации падения шарика
   setTimeout(() => {
-    ball.style.animation = 'ballJourney 10s linear forwards, discoShine 3s linear infinite';
+    ball.style.animation = 'ballJourney 7s linear forwards, discoShine 3s linear infinite';
     animateBallJourney();
   }, 50);
 }
