@@ -53,6 +53,7 @@ body{
   background:linear-gradient(135deg,var(--accent-purple),var(--neon-yellow));
   color:var(--bg-dark);font-weight:800;letter-spacing:2px;font-size:20px;
   transition:all .4s ease;position:relative;overflow:hidden;
+  transform:scale(1.1) rotate(-5deg);
 }
 .brand__mark:hover{transform:scale(1.1) rotate(-5deg)}
 .brand__name{
@@ -731,7 +732,7 @@ body{
 .services{display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:32px}
 .card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:60px;transition:.4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;
+  padding:40px;transition:.4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;
 }
 .card::before{
   content:'';position:absolute;inset:0;
@@ -824,16 +825,47 @@ input:focus,select:focus,textarea:focus{
 
 /* Адаптивность */
 @media (max-width:768px){
+  body{
+    overflow-x:hidden;
+  }
+  .container{
+    max-width:100%;
+    padding:0 15px;
+  }
   .nav__panel{
-    position:fixed;inset:100px 20px auto 20px;padding:32px;
+    position:fixed;
+    top:100px;
+    left:15px;
+    right:15px;
+    padding:32px;
     background:rgba(3,0,20,.98);border:1px solid var(--border);border-radius:var(--radius);
     display:none;flex-direction:column;gap:16px;z-index:1000;
+    max-width:calc(100vw - 30px);
   }
   .nav__panel.open{display:flex}
-  .hero{padding:100px 0 80px;height:70vh}
+  .hero{padding:140px 0 80px;height:70vh}
   .section{padding:80px 0}
-  .contacts{grid-template-columns:1fr}
+  .contacts{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
   .form__row{grid-template-columns:1fr}
+  .form{
+    padding:30px 15px 30px 15px;
+    padding-right:10px;
+    margin:0;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  .contact__info{
+    padding:30px 15px 30px 15px;
+    padding-right:30px;
+    margin:0;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+  }
   .services{grid-template-columns:1fr}
   .btn--primary::before,
   .btn--ghost::before{
@@ -844,7 +876,216 @@ input:focus,select:focus,textarea:focus{
     height:clamp(80px,15vw,150px);
   }
   .handwriting-letter{
-    font-size:60px;
+    font-size:80px;
+  }
+  .hero__logo{
+    margin-left:0;
+    margin-top:100px;
+  }
+  .handwriting-text{
+    margin-left:0;
+    margin-top:0px;
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+    text-align:center;
+  }
+  .handwriting-svg{
+    transform:translateX(20px);
+    width:100%;
+    max-width:100%;
+    overflow:visible;
+  }
+  .logo__word.spread-right{
+    transform:translateX(15px);
+  }
+  .hero__content{
+    padding:0 15px;
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+  }
+  .hero .container{
+    padding:0 15px;
+  }
+  .section{
+    padding:60px 0;
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+  }
+  .section__head{
+    margin-bottom:60px;
+  }
+  .slideshow{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
+  .hero__overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+  }
+  .hero{
+    overflow:hidden;
+  }
+  *{
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  img{
+    max-width:100%;
+    height:auto;
+  }
+  .logo__ball{
+    width:15px;
+    height:15px;
+  }
+  .hero__subtitle{
+    margin-top:5px;
+    margin-bottom:15px;
+  }
+  .hero__cta{
+    margin-top:15px;
+  }
+  .btn{
+    padding:10px 20px;
+    font-size:13px;
+  }
+}
+
+/* Мобильная анимация шарика с корректировкой позиции */
+@media (max-width:768px){
+  @keyframes ballJourneyMobile{
+    0%{
+      opacity:0;
+      transform:translate(-50%, -50%) translate(-170px, -220px) scale(0) rotate(0deg);
+    }
+    1%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-165px, -210px) scale(0.6) rotate(3deg);
+    }
+    1.5%{
+      transform:translate(-50%, -50%) translate(-162px, -205px) scale(0.7) rotate(4deg);
+    }
+    2%{
+      transform:translate(-50%, -50%) translate(-160px, -200px) scale(0.8) rotate(6deg);
+    }
+    3%{
+      transform:translate(-50%, -50%) translate(-155px, -190px) scale(0.85) rotate(9deg);
+    }
+    4%{
+      transform:translate(-50%, -50%) translate(-150px, -180px) scale(0.9) rotate(12deg);
+    }
+    5%{
+      transform:translate(-50%, -50%) translate(-145px, -170px) scale(0.95) rotate(15deg);
+    }
+    6%{
+      transform:translate(-50%, -50%) translate(-140px, -160px) scale(0.98) rotate(18deg);
+    }
+    7%{
+      transform:translate(-50%, -50%) translate(-135px, -150px) scale(1) rotate(21deg);
+    }
+    8%{
+      transform:translate(-50%, -50%) translate(-130px, -140px) scale(1.02) rotate(24deg);
+    }
+    9%{
+      transform:translate(-50%, -50%) translate(-125px, -130px) scale(1.03) rotate(27deg);
+    }
+    10%{
+      transform:translate(-50%, -50%) translate(-90px, -120px) scale(1.05) rotate(30deg);
+    }
+    11%{
+      transform:translate(-50%, -50%) translate(-85px, -110px) scale(1.06) rotate(32deg);
+    }
+    12%{
+      transform:translate(-50%, -50%) translate(-80px, -100px) scale(1.07) rotate(34deg);
+    }
+    13%{
+      transform:translate(-50%, -50%) translate(-75px, -90px) scale(1.08) rotate(36deg);
+    }
+    14%{
+      transform:translate(-50%, -50%) translate(-73px, -80px) scale(1.09) rotate(38deg);
+    }
+    15%{
+      transform:translate(-50%, -50%) translate(-72px, -70px) scale(1.1) rotate(40deg);
+    }
+    16%{
+      transform:translate(-50%, -50%) translate(-71px, -60px) scale(1.15) rotate(45deg);
+    }
+    17%{
+      transform:translate(-50%, -50%) translate(-70px, -55px) scale(1.18) rotate(47deg);
+    }
+    18%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-60px, -30px) scale(1.2) rotate(50deg);
+    }
+    20%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-60px, -50px) scale(1.15) rotate(52deg);
+    }
+    22%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-60px, -70px) scale(1.12) rotate(53deg);
+    }
+    25%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-75px, -100px) scale(1.1) rotate(55deg);
+    }
+    27%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-65px, -80px) scale(1.12) rotate(57deg);
+    }
+    30%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-40px, -30px) scale(1.2) rotate(60deg);
+    }
+    32%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-30px, -50px) scale(1.15) rotate(62deg);
+    }
+    35%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(10px, -70px) scale(1.1) rotate(65deg);
+    }
+    42%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(45px, -30px) scale(1.2) rotate(70deg);
+    }
+    45%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(5px, -80px) scale(1.1) rotate(75deg);
+    }
+    47%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-5px, -60px) scale(1.15) rotate(77deg);
+    }
+    50%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-10px, -40px) scale(1.2) rotate(80deg);
+    }
+    60%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-15px, 0px) scale(1.2) rotate(80deg);
+    }
+    95%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-15px, 0px) scale(1.2) rotate(80deg);
+    }
+    100%{
+      opacity:1;
+      transform:translate(-50%, -50%) translate(-15px, 0px) scale(1.2) rotate(80deg);
+    }
   }
 }
 
@@ -1232,7 +1473,11 @@ function startBallAnimation() {
   
   // Запуск анимации падения шарика
   setTimeout(() => {
-    ball.style.animation = 'ballJourney 7s linear forwards, discoShine 3s linear infinite';
+    // Проверяем, мобильное ли устройство
+    const isMobile = window.innerWidth <= 768;
+    const animationName = isMobile ? 'ballJourneyMobile' : 'ballJourney';
+    
+    ball.style.animation = `${animationName} 7s linear forwards, discoShine 3s linear infinite`;
     animateBallJourney();
   }, 50);
 }
