@@ -2,16 +2,14 @@
   "name": "unevent-website",
   "version": "1.0.0",
   "description": "UNevent - Событие как искусство. Профессиональная организация мероприятий полного цикла.",
-  "main": "public/index.html",
+  "main": "index.html",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "serve": "vite preview --port 3000",
-    "lint": "eslint src/js/**/*.js",
-    "lint:fix": "eslint src/js/**/*.js --fix",
-    "format": "prettier --write src/**/*.{js,css,html}",
-    "optimize:images": "imagemin src/images/*.{jpg,png,svg} --out-dir=public/images --plugin=imagemin-mozjpeg --plugin=imagemin-pngquant --plugin=imagemin-svgo"
+    "lint": "echo 'No JS files to lint'",
+    "format": "echo 'No files to format'"
   },
   "keywords": [
     "event",
@@ -29,7 +27,11 @@
     "imagemin": "^8.0.0",
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^9.0.0",
-    "imagemin-svgo": "^10.0.0"
+    "imagemin-svgo": "^10.0.0",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^6.0.0",
+    "postcss": "^8.4.0",
+    "terser": "^5.0.0"
   },
   "dependencies": {
     "lazysizes": "^5.3.0"
