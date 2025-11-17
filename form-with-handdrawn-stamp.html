@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отправить заявку — Письмо из конверта</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 50%, #7b1fa2 100%);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Фон граффити стены */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse 800px 600px at 20% 30%, rgba(255, 107, 107, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse 1000px 400px at 80% 10%, rgba(78, 205, 196, 0.12) 0%, transparent 35%),
+                radial-gradient(ellipse 600px 800px at 10% 80%, rgba(255, 230, 109, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse 900px 500px at 85% 75%, rgba(168, 218, 220, 0.12) 0%, transparent 38%),
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.01) 20px, rgba(255,255,255,0.01) 40px),
+                repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(0,0,0,0.01) 30px, rgba(0,0,0,0.01) 60px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Граффити узоры */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cpath d='M50 100 Q100 50 150 100 T250 100' stroke='rgba(255,107,107,0.08)' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M30 200 L80 180 L120 220 L90 250 Z' stroke='rgba(78,205,196,0.07)' stroke-width='2.5' fill='none' stroke-linejoin='round'/%3E%3Ctext x='200' y='120' font-size='80' font-weight='900' fill='rgba(255,230,109,0.05)' font-family='serif'%3E%26%3C/text%3E%3Ccircle cx='350' cy='50' r='40' stroke='rgba(168,218,220,0.06)' stroke-width='3' fill='none'/%3E%3Cpath d='M100 350 Q150 300 200 350' stroke='rgba(255,155,158,0.07)' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cline x1='20' y1='280' x2='380' y2='320' stroke='rgba(180,162,217,0.05)' stroke-width='2' stroke-dasharray='5,5'/%3E%3Cpath d='M300 200 L350 150 L380 220 Z' stroke='rgba(244,164,96,0.06)' stroke-width='2' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cpath d='M80 100 Q120 60 160 100' stroke='rgba(255,139,148,0.06)' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='250' cy='80' r='30' stroke='rgba(78,205,196,0.07)' stroke-width='2' fill='none'/%3E%3Ctext x='50' y='380' font-size='100' font-weight='900' fill='rgba(255,107,107,0.04)' font-family='cursive'%3E✦✦✦%3C/text%3E%3Cpath d='M350 200 L450 100 L420 300' stroke='rgba(168,218,220,0.05)' stroke-width='2.5' fill='none' stroke-linejoin='round'/%3E%3Cline x1='10' y1='450' x2='490' y2='420' stroke='rgba(244,164,96,0.06)' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 400px 400px, 500px 500px;
+            background-position: 0 0, 100px 50px;
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .stamp-section {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            max-width: 800px;
+            perspective: 1200px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-title {
+            text-align: center;
+            color: #fff;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            text-shadow: 3px 3px 0 rgba(255,107,107,0.4), 6px 6px 0 rgba(78,205,196,0.2);
+            order: 1;
+        }
+
+        /* Письмо */
+        .sticky-form {
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe8f0 100%);
+            padding: 40px;
+            border-radius: 2px;
+            position: relative;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.4),
+                0 12px 30px rgba(0,0,0,0.3),
+                0 6px 15px rgba(0,0,0,0.2),
+                0 3px 8px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255, 182, 193, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.25));
+            transform: rotate(-1.5deg);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: letterSlide 0.8s ease-out forwards;
+            opacity: 0;
+            clip-path: polygon(
+                0 0, 98% 0.5%, 100% 2%, 99.5% 4%, 100% 6%, 98% 8%, 100% 10%,
+                100% 90%, 99% 92%, 100% 94%, 98% 96%, 100% 98%, 0 100%,
+                0 95%, 1% 93%, 0 91%, 2% 89%, 0 87%, 1% 85%,
+                0 20%, 2% 18%, 0 16%, 1% 14%, 0 12%
+            );
+            margin-bottom: -100px;
+            padding-bottom: 120px;
+            z-index: 3;
+            order: 2;
+            border: 1.5px solid rgba(255, 182, 193, 0.5);
+            margin-left: 15%;
+        }
+
+        @keyframes letterSlide {
+            0% {
+                transform: rotate(-1.5deg) translateY(120px);
+                opacity: 0;
+            }
+            100% {
+                transform: rotate(-1.5deg) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-corner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 22px solid transparent;
+            border-top: 22px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-title-inner {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d63384;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-subtitle {
+            font-size: 12px;
+            color: #e685b5;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #e685b5;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 2px dashed rgba(255, 182, 193, 0.3);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #d63384;
+            background: transparent;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #ffc0cb;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+            padding-left: 8px;
+            border-bottom-style: solid;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            padding: 12px 0;
+            line-height: 1.8;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 14px 24px;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8b94 100%);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.5);
+        }
+
+        .form-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .form-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-button-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Конверт */
+        .envelope {
+            position: relative;
+            width: 75%;
+            max-width: 650px;
+            height: 340px;
+            margin-left: -18%;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e5e5e5 50%, #f0f0f0 100%);
+            border-radius: 15px 15px 15px 15px;
+            box-shadow: 
+                0 -15px 50px rgba(0,0,0,0.35),
+                0 -8px 25px rgba(0,0,0,0.25),
+                inset 0 3px 0 rgba(255,255,255,0.6),
+                inset 0 -5px 10px rgba(0,0,0,0.08),
+                inset -70px -50px 35px rgba(0,0,0,0.15);
+            position: relative;
+            margin-top: -120px;
+            z-index: 1;
+            border: 2px solid #d0d0d0;
+            order: 3;
+            transform: rotate(-12deg) skewY(-3deg);
+            transition: all 0.4s ease;
+            clip-path: polygon(0 50%, 0 100%, 100% 100%, 100% 50%, 50% 0%);
+            overflow: visible;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.01) 3px, rgba(0,0,0,0.01) 6px),
+                repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
+            pointer-events: none;
+            border-radius: 15px;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 50% solid transparent;
+            border-right: 50% solid transparent;
+            border-bottom: 100px solid #d5d5d5;
+            margin: 0 auto;
+            box-shadow: 
+                inset -2px 2px 4px rgba(0,0,0,0.08),
+                0 -5px 20px rgba(0,0,0,0.2);
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.15));
+        }
+
+        .envelope-creases {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .envelope-creases::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent 0%, #a8a8a8 20%, #a8a8a8 80%, transparent 100%);
+            box-shadow: 
+                inset 0 0.5px 0 rgba(255,255,255,0.8),
+                0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .envelope-creases::after {
+            content: '';
+            position: absolute;
+            top: 48%;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(to right, transparent 0%, #999 10%, #999 90%, transparent 100%);
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.6),
+                0 2px 3px rgba(0,0,0,0.15);
+        }
+
+        .envelope-vertical {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 50%;
+            background: linear-gradient(to bottom, transparent 0%, #999 15%, #999 85%, transparent 100%);
+            box-shadow: 
+                inset -1px 0 0 rgba(255,255,255,0.5),
+                1px 0 2px rgba(0,0,0,0.12);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .envelope-stamp {
+            position: absolute;
+            top: 50px;
+            right: 30px;
+            width: 55px;
+            height: 65px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8b94);
+            border-radius: 4px;
+            border: 3px dashed #ff4757;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 
+                0 4px 12px rgba(255, 107, 107, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            animation: stampSway 2s ease-in-out infinite;
+            transform: rotate(-12deg);
+        }
+
+        @keyframes stampSway {
+            0%, 100% { transform: rotate(-12deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
+        /* ===== НАРИСОВАННАЯ ОТ РУКИ МАРКА ===== */
+        .postal-stamp {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 50%, #fafafa 100%);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            animation: handDrawnTilt 4s ease-in-out infinite;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        @keyframes handDrawnTilt {
+            0%, 100% { transform: rotate(-7deg); }
+            50% { transform: rotate(-3deg); }
+        }
+
+        /* Нарисованный контур от руки - верх */
+        .postal-stamp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='360'%3E%3Cpath d='M8 12 Q10 8 15 8 L265 8 Q270 8 272 12 L272 348 Q270 352 265 352 L15 352 Q10 352 8 348 Z' stroke='%23333' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round' opacity='0.6'/%3E%3Cpath d='M12 25 L268 25 M15 320 L265 320' stroke='%23333' stroke-width='1.5' stroke-dasharray='3,4' opacity='0.3'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Лёгкая текстура бумаги */
+        .postal-stamp::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M10,10 Q20,15 30,12' stroke='%23ddd' stroke-width='0.5' fill='none'/%3E%3Cpath d='M15,35 Q30,30 40,38' stroke='%23ddd' stroke-width='0.5' fill='none'/%3E%3Cpath d='M5,65 Q25,60 35,70' stroke='%23ddd' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .stamp-content {
+            position: relative;
+            z-index: 2;
+            color: #333;
+            font-family: 'Caveat', cursive;
+        }
+
+        .stamp-handwritten {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #333;
+            transform: skewY(-2deg);
+        }
+
+        .stamp-subtitle {
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .stamp-list {
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.9;
+            text-align: left;
+            color: #333;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stamp-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 7px 0;
+        }
+
+        .stamp-bullet {
+            width: 5px;
+            height: 5px;
+            background: #333;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .stamp-footer {
+            font-family: 'Caveat', cursive;
+            font-size: 14px;
+            font-weight: 400;
+            margin-top: 10px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* УСПЕШНОЕ СООБЩЕНИЕ */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .success-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .success-content {
+            background: #fff;
+            padding: 50px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 400px;
+            width: 90%;
+            animation: successBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes successBounce {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: successSpin 0.8s ease;
+        }
+
+        @keyframes successSpin {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .success-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .success-button {
+            padding: 10px 30px;
+            background: linear-gradient(135deg, #4ecdc4, #44af9f);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .success-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .form-error {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 11px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Адаптив */
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .stamp-section {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .postal-stamp {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-title {
+                font-size: 32px;
+                margin-bottom: 40px;
+            }
+
+            .sticky-form {
+                padding: 25px;
+                padding-bottom: 100px;
+                margin-left: 10%;
+            }
+
+            .form-title-inner {
+                font-size: 20px;
+            }
+
+            .postal-stamp {
+                width: 260px;
+                height: 340px;
+                padding: 20px;
+            }
+
+            .stamp-handwritten {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+
+            .stamp-subtitle {
+                font-size: 10px;
+                margin-bottom: 12px;
+            }
+
+            .stamp-list {
+                font-size: 10px;
+                line-height: 1.8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- СЕКЦИЯ С ФОРМОЙ -->
+        <div class="form-section">
+            <div class="form-container">
+                <h1 class="form-title">✉️ Отправь письмо</h1>
+
+                <!-- Письмо -->
+                <form class="sticky-form" id="contactForm">
+                    <div class="form-corner"></div>
+
+                    <div class="form-content">
+                        <h2 class="form-title-inner">Письмо для нас</h2>
+                        <p class="form-subtitle">Расскажи о своём проекте</p>
+
+                        <div class="form-group">
+                            <label for="name">📝 Твоё имя</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name"
+                                placeholder="Как тебя зовут?"
+                                required
+                            >
+                            <div class="error-message">Пожалуйста, введи имя</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">📧 Email</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                placeholder="твой@email.com"
+                                required
+                            >
+                            <div class="error-message">Пожалуйста, введи корректный email</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">☎️ Телефон</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone"
+                                placeholder="+7 (XXX) XXX-XX-XX"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">💬 Сообщение</label>
+                            <textarea 
+                                id="message" 
+                                name="message"
+                                placeholder="Расскажи, что тебе нужно..."
+                                required
+                            ></textarea>
+                            <div class="error-message">Пожалуйста, напиши сообщение</div>
+                        </div>
+
+                        <button type="submit" class="form-button">
+                            <span class="form-button-text">Отправить письмо 🚀</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Конверт -->
+                <div class="envelope">
+                    <div class="envelope-creases"></div>
+                    <div class="envelope-vertical"></div>
+                    <div class="envelope-stamp">📮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- НАРИСОВАННАЯ МАРКА СПРАВА -->
+        <div class="stamp-section">
+            <div class="postal-stamp">
+                <div class="stamp-content">
+                    <div class="stamp-handwritten">
+                        Бесплатно!
+                    </div>
+                    
+                    <div class="stamp-subtitle">Консультация</div>
+                    
+                    <div class="stamp-list">
+                        <div class="stamp-list-item">
+                            <div class="stamp-bullet"></div>
+                            <span>Анализ потребностей</span>
+                        </div>
+                        <div class="stamp-list-item">
+                            <div class="stamp-bullet"></div>
+                            <span>Концепцию события</span>
+                        </div>
+                        <div class="stamp-list-item">
+                            <div class="stamp-bullet"></div>
+                            <span>Смету и бюджет</span>
+                        </div>
+                        <div class="stamp-list-item">
+                            <div class="stamp-bullet"></div>
+                            <span>План реализации</span>
+                        </div>
+                    </div>
+
+                    <div class="stamp-footer">~ С уважением</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛ -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">🎉</div>
+            <h3 class="success-title">Спасибо!</h3>
+            <p class="success-text">Твоё письмо отправлено.<br><br>Скоро мы свяжемся с тобой! 💌</p>
+            <button class="success-button" onclick="closeSuccess()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const successModal = document.getElementById('successModal');
+        const inputs = form.querySelectorAll('input, textarea');
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.remove('error');
+                const errorMsg = input.parentElement.querySelector('.error-message');
+                if (errorMsg) errorMsg.classList.remove('show');
+            });
+        });
+
+        function validateField(field) {
+            const isValid = validateInput(field);
+            const errorMsg = field.parentElement.querySelector('.error-message');
+
+            if (!isValid && field.value.trim() !== '') {
+                field.parentElement.classList.add('error');
+                if (errorMsg) errorMsg.classList.add('show');
+            }
+        }
+
+        function validateInput(input) {
+            if (!input.value.trim()) {
+                return false;
+            }
+
+            if (input.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(input.value);
+            }
+
+            return true;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            let isFormValid = true;
+            inputs.forEach(input => {
+                if (input.hasAttribute('required') && !validateInput(input)) {
+                    isFormValid = false;
+                    input.parentElement.classList.add('error');
+                    const errorMsg = input.parentElement.querySelector('.error-message');
+                    if (errorMsg) errorMsg.classList.add('show');
+                }
+            });
+
+            if (!isFormValid) {
+                form.classList.add('form-error');
+                setTimeout(() => form.classList.remove('form-error'), 400);
+                return;
+            }
+
+            const submitBtn = form.querySelector('.form-button');
+            const originalText = submitBtn.querySelector('.form-button-text').textContent;
+            
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.form-button-text').textContent = '⏳ Отправляю...';
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                form.classList.add('submitted');
+                
+                setTimeout(() => {
+                    successModal.classList.add('show');
+
+                    setTimeout(() => {
+                        form.reset();
+                        form.classList.remove('submitted');
+                        inputs.forEach(input => {
+                            input.parentElement.classList.remove('error');
+                            const errorMsg = input.parentElement.querySelector('.error-message');
+                            if (errorMsg) errorMsg.classList.remove('show');
+                        });
+
+                        submitBtn.disabled = false;
+                        submitBtn.querySelector('.form-button-text').textContent = originalText;
+                    }, 800);
+                }, 500);
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.form-button-text').textContent = '❌ Ошибка!';
+                
+                setTimeout(() => {
+                    submitBtn.querySelector('.form-button-text').textContent = originalText;
+                }, 3000);
+            }
+        });
+
+        function closeSuccess() {
+            successModal.classList.remove('show');
+        }
+
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                closeSuccess();
+            }
+        });
+    </script>
+</body>
+</html>
